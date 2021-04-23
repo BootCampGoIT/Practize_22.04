@@ -58,9 +58,12 @@ const mapStateToProps = (state) => {
     products: productsListSelector(state),
   };
 };
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    addProductsOperation: (data) => {
+      dispatch(addProductsOperation(data));
+    },
+  };
+};
 
-export default connect(mapStateToProps, { addProductsOperation })(ProductsForm);
-
-
-
-
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsForm);

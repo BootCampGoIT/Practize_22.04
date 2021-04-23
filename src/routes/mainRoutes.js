@@ -25,4 +25,16 @@ export const mainRoutes = [
     exact: true,
     component: lazy(() => import("../pages/CartPage")),
   },
+  {
+    name: "Registration",
+    path: "/registration",
+    exact: true,
+    component: lazy(() => import("../pages/AuthPage")),
+  },
+  {
+    name: "Login",
+    path: "/login",
+    exact: true,
+    component: lazy(() => import("../pages/AuthPage")),
+  },
 ];

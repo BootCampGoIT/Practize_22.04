@@ -6,6 +6,7 @@ import {
   SETCOUNTER,
 } from "./productsActions";
 import { combineReducers } from "redux";
+import { LOGOUT } from "../auth/authActions";
 
 const itemsReducer = (state = [], { type, payload }) => {
   switch (type) {
@@ -13,6 +14,8 @@ const itemsReducer = (state = [], { type, payload }) => {
       return [...payload];
     case ADDPRODUCT:
       return [...state, payload];
+    case LOGOUT:
+      return [];
     default:
       return state;
   }
@@ -22,6 +25,8 @@ const filterReducer = (state = "", { type, payload }) => {
   switch (type) {
     case SETFILTER:
       return payload;
+    case LOGOUT:
+      return "";
     default:
       return state;
   }
@@ -30,6 +35,9 @@ const loadingReducer = (state = false, { type }) => {
   switch (type) {
     case SETLOADING:
       return !state;
+    case LOGOUT:
+      return false;
+
     default:
       return state;
   }
