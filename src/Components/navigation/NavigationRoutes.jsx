@@ -1,16 +1,24 @@
 import React, { Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
+import PrivateRoute from "../routes/PrivateRoute";
+import PublicRoute from "../routes/PublicRoute";
+import { connect } from "react-redux";
 
-const NavigationRoutes = ({ routes }) => {
+const NavigationRoutes = ({ routes, isAuth }) => {
   return (
     <Suspense fallback={<h2>...loading</h2>}>
       <Switch>
-        {routes.map(({ exact, path, component }) => (
-          <Route exact={exact} path={path} component={component} key={path} />
-        ))}
+        {routes.map((route) =>
+          route.isPrivate ? (
+            <PrivateRoute {...route} isAuth={isAuth} key={route.path} />
+          ) : (
+            <PublicRoute {...route} isAuth={isAuth} key={route.path} />
+          )
+        )}
       </Switch>
     </Suspense>
   );
 };
 
-export default NavigationRoutes;
+const mstp = (state) => ({ isAuth: state.auth.idToken });
+export default connect(mstp)(NavigationRoutes);

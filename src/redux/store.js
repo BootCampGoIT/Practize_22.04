@@ -1,36 +1,24 @@
-import { createStore, applyMiddleware, bindActionCreators } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./rootReducer";
+import { persistStore } from "redux-persist";
 import thunk from "redux-thunk";
-import axios from "axios";
-// import axios from "axios";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
 
-const loggerMiddleware = (store) => (next) => (action) => {
-  console.group();
-  console.log(action);
-  console.groupEnd();
-
-  return next(action);
-};
-
-const spyMiddleware = (store) => (next) => async (action) => {
-  // if (action.type === "@products/addProducts") {
-  //   await axios.post(`https://bootcamp5-default-rtdb.firebaseio.com/spy.json`, {
-  //     data: action.payload,
-  //     date: Date.now(),
-  //     local: window.parent.localStorage["persist:courses"],
-  //   });
-  // }
-
-  return next(action);
-};
-
-const middleWares = [thunk, spyMiddleware, loggerMiddleware];
+const middleWares = [thunk];
 
 const enhancer = applyMiddleware(...middleWares);
 
-const store = createStore(rootReducer, composeWithDevTools(enhancer));
+const cartPersistConfig = {
+  key: "cart",
+  storage,
+  whitelist: ["cart"],
+};
+const store = createStore(
+  persistReducer(cartPersistConfig, rootReducer),
+  composeWithDevTools(enhancer)
+);
+persistStore(store);
 
 export default store;
-
-// console.log(store.getState().products.items);
