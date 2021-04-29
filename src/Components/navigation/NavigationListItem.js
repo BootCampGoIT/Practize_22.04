@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { LangContext } from "../App";
+// import { useLanguage } from "../../hooks/useLanguage";
 
 const NavigationListItem = ({
   isAuth,
@@ -9,6 +11,7 @@ const NavigationListItem = ({
   exact,
   name,
 }) => {
+  const { language } = useContext(LangContext);
   return (
     <>
       {!isPrivate && !isRestricted && (
@@ -18,7 +21,7 @@ const NavigationListItem = ({
             to={path}
             className='navLink'
             activeClassName='active_navLink'>
-            {name}
+            {language.navigation[name]}
           </NavLink>
         </li>
       )}
@@ -30,7 +33,7 @@ const NavigationListItem = ({
             to={path}
             className='navLink'
             activeClassName='active_navLink'>
-            {name}
+            {language.navigation[name]}
           </NavLink>
         </li>
       )}
@@ -41,7 +44,7 @@ const NavigationListItem = ({
             to={path}
             className='navLink'
             activeClassName='active_navLink'>
-            {name}
+            {language.navigation[name]}
           </NavLink>
         </li>
       )}

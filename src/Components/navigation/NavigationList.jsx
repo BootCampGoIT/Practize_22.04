@@ -1,13 +1,19 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { NavigationListContainer } from "./NavigationStyled";
-import { useSelector, connect } from "react-redux";
-import { logout } from "../../redux/auth/authActions";
-import NavigationListItem from "./NavigationListItem";
 
-const NavigationList = ({ routes, isAuth, logout }) => {
-  // const isAuth = useSelector((state) => state.auth.idToken);
-  console.log(isAuth);
+import { NavigationListContainer } from "./NavigationStyled";
+import { useSelector, useDispatch } from "react-redux";
+
+import NavigationListItem from "./NavigationListItem";
+import { isAuthSelector } from "../../redux/auth/authSelectors";
+import { logout } from "../../redux/auth/authActions";
+import LanguageSelect from "../languageSelect/LanguageSelect";
+
+const NavigationList = ({ routes }) => {
+  const isAuth = useSelector(isAuthSelector);
+  const dispatch = useDispatch();
+
+  const dispLogout = () => dispatch(logout());
+
   return (
     <NavigationListContainer>
       <ul className='navigation-list'>
@@ -16,18 +22,15 @@ const NavigationList = ({ routes, isAuth, logout }) => {
         ))}
         {isAuth && (
           <li>
-            <button type='button' onClick={logout}>
+            <button type='button' onClick={dispLogout}>
               LOGOUT
             </button>
           </li>
         )}
       </ul>
+      <LanguageSelect />
     </NavigationListContainer>
   );
 };
 
-const mstp = (state) => ({
-  isAuth: state.auth.idToken,
-});
-
-export default connect(mstp, { logout })(NavigationList);
+export default NavigationList;

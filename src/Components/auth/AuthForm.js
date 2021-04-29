@@ -1,82 +1,68 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import {
   loginOperation,
   registrationOperation,
 } from "../../redux/auth/authOperations";
+import { isAuthSelector } from "../../redux/auth/authSelectors";
 
-class AuthForm extends Component {
-  state = {
-    email: "",
-    password: "",
-    name: "",
-  };
+const AuthForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const location = useLocation();
+  const dispatch = useDispatch();
+  // const isAuth = useSelector(isAuthSelector);
 
-  onHandleChange = (e) => {
+  const onHandleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    if (name === "email") setEmail(value);
+    if (name === "password") setPassword(value);
   };
 
-  onHandleSubmit = (e) => {
+  const onHandleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = this.state;
 
-    this.isRegistrationForm()
-      ? this.props.registrationOperation({ email, password })
-      : this.props.loginOperation({ email, password });
+    isRegistrationForm()
+      ? dispatch(registrationOperation({ email, password }))
+      : dispatch(loginOperation({ email, password }));
   };
 
-  isRegistrationForm = () => {
-    return this.props.location.pathname === "/registration"; //true
+  const isRegistrationForm = () => {
+    return location.pathname === "/registration"; //true
   };
 
-  render() {
-    return (
-      <>
-        <h2>
-          Please,
-          {this.isRegistrationForm() ? "register" : "login"}!
-        </h2>
-        <form onSubmit={this.onHandleSubmit}>
-          {/* {this.isRegistrationForm() && (
-            <label>
-              Name:
-              <input
-                type='text'
-                name='name'
-                value={this.state.name}
-                onChange={this.onHandleChange}
-              />
-            </label>
-          )} */}
-          <label>
-            Email:
-            <input
-              type='text'
-              name='email'
-              value={this.state.email}
-              onChange={this.onHandleChange}
-            />
-          </label>
-          <label>
-            Password:
-            <input
-              type='text'
-              name='password'
-              value={this.state.password}
-              onChange={this.onHandleChange}
-            />
-          </label>
-          <button type='submit'>
-            {this.isRegistrationForm() ? "register" : "login"}
-          </button>
-        </form>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <h2>
+        Please,
+        {isRegistrationForm() ? "register" : "login"}!
+      </h2>
+      <form onSubmit={onHandleSubmit}>
+        <label>
+          Email:
+          <input
+            type='text'
+            name='email'
+            value={email}
+            onChange={onHandleChange}
+          />
+        </label>
+        <label>
+          Password:
+          <input
+            type='text'
+            name='password'
+            value={password}
+            onChange={onHandleChange}
+          />
+        </label>
+        <button type='submit'>
+          {isRegistrationForm() ? "register" : "login"}
+        </button>
+      </form>
+    </>
+  );
+};
 
-export default connect(null, { registrationOperation, loginOperation })(
-  withRouter(AuthForm)
-);
+export default AuthForm;

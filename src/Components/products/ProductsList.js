@@ -1,11 +1,12 @@
 import React from "react";
 import ProductsListItem from "./ProductsListItem";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   filteredProductsSelector,
 } from "../../redux/products/productsSelectors";
 
-const ProductsList = ({ products }) => {
+const ProductsList = () => {
+  const products = useSelector(filteredProductsSelector)
   return (
     <ul>
       {products.map(({ id }) => (
@@ -14,13 +15,7 @@ const ProductsList = ({ products }) => {
     </ul>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    products: filteredProductsSelector(state),
-  };
-};
 
-export default connect(mapStateToProps)(ProductsList);
+export default ProductsList;
 
-// [{}, {}] === "100100101001010010101"
 

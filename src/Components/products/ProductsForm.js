@@ -58,6 +58,7 @@ const mapStateToProps = (state) => {
     products: productsListSelector(state),
   };
 };
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     addProductsOperation: (data) => {

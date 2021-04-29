@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import ProductsList from "../Components/products/ProductsList";
 import { getProductsOperation } from "../redux/products/productsOperations";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProductsFilter from "../Components/products/ProductsFilter";
 import { setCounter } from "../redux/products/productsActions";
 
+
 const ProductsPage = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getProductsOperation());
   }, [dispatch]);

@@ -2,7 +2,7 @@ import { lazy } from "react";
 
 export const mainRoutes = [
   {
-    name: "Home",
+    name: "home",
     path: "/",
     exact: true,
     component: lazy(() => import("../pages/HomePage")),
@@ -10,7 +10,7 @@ export const mainRoutes = [
     isRestricted: false,
   },
   {
-    name: "Admin",
+    name: "admin",
     path: "/admin",
     exact: false,
     component: lazy(() => import("../pages/AdminPage")),
@@ -18,7 +18,7 @@ export const mainRoutes = [
     isRestricted: false,
   },
   {
-    name: "Products",
+    name: "products",
     path: "/allproducts",
     exact: false,
     component: lazy(() => import("../pages/ProductsPage")),
@@ -26,7 +26,7 @@ export const mainRoutes = [
     isRestricted: false,
   },
   {
-    name: "Cart",
+    name: "cart",
     path: "/cart",
     exact: true,
     component: lazy(() => import("../pages/CartPage")),
@@ -34,7 +34,7 @@ export const mainRoutes = [
     isRestricted: false,
   },
   {
-    name: "Registration",
+    name: "registration",
     path: "/registration",
     exact: true,
     component: lazy(() => import("../pages/AuthPage")),
@@ -42,7 +42,7 @@ export const mainRoutes = [
     isRestricted: true,
   },
   {
-    name: "Login",
+    name: "login",
     path: "/login",
     exact: true,
     component: lazy(() => import("../pages/AuthPage")),
